@@ -1,5 +1,3 @@
-# File: app.py
-
 import streamlit as st
 
 # Page configuration with custom theme
