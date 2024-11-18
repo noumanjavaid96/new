@@ -13,8 +13,6 @@ import logging
 import base64
 import zipfile
 from typing import Dict
-from deepface import DeepFace  # For deepfake detection
-import pytesseract  # For OCR in watermark detection
 
 # Page configuration with custom theme
 st.set_page_config(
