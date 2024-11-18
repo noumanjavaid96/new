@@ -22,16 +22,19 @@ import pytesseract  # For OCR in watermark detection
 # Page configuration with custom theme
 st.set_page_config(
     page_title="Centurion Analysis Tool",  # Title of the web app
-    page_icon="🛡️",  # Icon displayed in the browser tab
+    page_icon="https://raw.githubusercontent.com/noumanjavaid96/ai-as-an-api/refs/heads/master/image%20(39).png",  # Icon displayed in the browser tab
     layout="wide",  # Layout of the app
-    initial_sidebar_state="expanded",  # Initial state of the sidebar
+    initial_sidzebar_state="expanded", 
+# Initial state of the sidebar
 )
+
+
 
 # Apply custom theme using CSS
 st.markdown(
     """
     <style>
-    :root {
+    {
         --primary-color: #aba9aa;  # Primary color for the theme
         --background-color: #fdfdfd;  # Background color
         --secondary-background-color: #4a4c56;  # Secondary background color
@@ -50,7 +53,7 @@ st.markdown(
     """
     <div class="title-container">
         <img class="title-icon" src="https://raw.githubusercontent.com/noumanjavaid96/ai-as-an-api/refs/heads/master/image%20(39).png" alt="Icon" width="50" height="50">
-        <div class="title-text" style="font-size: 36px; font-weight: bold; color: var(--text-color);">Centurion Analysis Tool</div>
+        <div class="title-text" style="font-size: 36px; font-weight: bold; color: var(--text-color);">Centurion</div>
     </div>
     """,
     unsafe_allow_html=True  # Allow HTML in markdown
