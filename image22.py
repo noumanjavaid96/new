@@ -1,5 +1,3 @@
-# File: app.py
-
 import streamlit as st
 from PIL import Image, ImageDraw, ImageFont, ExifTags
 import requests
