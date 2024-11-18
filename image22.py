@@ -9,6 +9,7 @@ import fitz  # PyMuPDF for PDF handling
 import docx  # For handling Word documents
 from difflib import HtmlDiff, SequenceMatcher  # For text comparison
 import os
+import cv2
 import logging
 import base64
 import zipfile
