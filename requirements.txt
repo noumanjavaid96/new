@@ -1,0 +1,13 @@
+streamlit
+opencv-python-headless
+scikit-image
+pillow
+numpy
+pandas
+fuzzywuzzy
+python-Levenshtein
+PyMuPDF
+python-docx
+opencv-python 
+opencv-contrib-python 
+opencv-contrib-python-headless
