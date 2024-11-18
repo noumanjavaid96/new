@@ -23,9 +23,7 @@ import pytesseract  # For OCR in watermark detection
 st.set_page_config(
     page_title="Centurion Analysis Tool",  # Title of the web app
     page_icon="https://raw.githubusercontent.com/noumanjavaid96/ai-as-an-api/refs/heads/master/image%20(39).png",  # Icon displayed in the browser tab
-    layout="wide",  # Layout of the app
-    initial_sidzebar_state="expanded", 
-# Initial state of the sidebar
+    layout="wide",  # Layout of the app# Initial state of the sidebar
 )
 
 
