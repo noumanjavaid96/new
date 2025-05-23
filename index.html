@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vapi Assistant Interface</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="app-container">
+        <h1>Vapi Voice Assistant</h1>
+
+        <div id="controls">
+            <button id="toggleCallButton">Start Call</button>
+        </div>
+
+        <div id="statusArea">
+            <p id="callStatus">Status: Idle</p>
+            <p id="interimSpeech">Listening: ...</p>
+        </div>
+
+        <div id="transcriptArea">
+            <!-- Conversation transcript will be dynamically added here -->
+        </div>
+    </div>
+
+    <!--
+        Notes on Vapi SDK Integration:
+
+        In a project with a build system (like Webpack, Parcel, Vite) or when using ES Modules 
+        directly in modern browsers with a proper server setup, you would typically import 
+        the Vapi SDK within your JavaScript file (e.g., script.js).
+        Example ES Module import in script.js:
+        // import Vapi from '@vapi-ai/web'; 
+        // or for CommonJS (less common for front-end without bundler):
+        // const Vapi = require('@vapi-ai/web');
+
+        If a UMD/standalone CDN version of the @vapi-ai/web SDK were readily available and 
+        recommended by Vapi for direct browser use without a module system, it might be 
+        included like this:
+        // <script src="CDN_URL_FOR_VAPI_WEB_SDK"></script>
+        
+        For this project, script.js will assume the Vapi class is available in its scope,
+        which implies it's being handled by a module system or a bundler in a more
+        complete project setup.
+    -->
+    <script src="script.js"></script>
+</body>
+</html>

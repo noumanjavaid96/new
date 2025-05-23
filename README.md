@@ -125,4 +125,69 @@ To connect your Vapi.ai assistant to this backend server, you need to configure 
 *   **Dependency Issues**: If you encounter issues after `npm install`, try removing `node_modules` and `package-lock.json`, then run `npm install` again.
 *   **Check Server Logs**: The server logs detailed information, including errors, to the console. These are your first point of call for debugging.
 *   **Vapi Dashboard Logs**: Check the Vapi.ai dashboard for logs related to your assistant and webhook events. This can show you what Vapi is sending and what responses it's receiving.
+
+## Web Interface for Vapi Assistant
+
+The project includes a simple web interface (`index.html`, `style.css`, `script.js`) located in the project root, allowing you to interact with your Vapi assistant directly from your browser.
+
+### Overview
+
+This web UI provides a basic but functional way to:
+*   Start and end voice calls with your configured Vapi assistant.
+*   View the live transcription of your conversation.
+*   See interim speech results and call status updates.
+
+### Prerequisites for UI
+
+*   **Modern Web Browser**: Chrome, Firefox, Safari, Edge, etc.
+*   **Running Backend Server**: The Node.js backend server (described in the sections above) must be running and publicly accessible (e.g., via ngrok).
+*   **Vapi Assistant Configuration**: The Vapi Assistant configured on the Vapi.ai dashboard must be pointing to this running backend server's webhook URL (e.g., `https://your-ngrok-url.io/vapi-webhook`).
+
+### Configuration
+
+The web UI's `script.js` file needs to be configured with your specific Vapi Assistant ID and Public API Key.
+
+1.  **Open `script.js`**: Locate the `script.js` file in the root of the project.
+2.  **Edit Credentials**: Near the top of the file, you will find these lines:
+    ```javascript
+    const VAPI_ASSISTANT_ID = 'YOUR_VAPI_ASSISTANT_ID_HERE'; // Replace with your Vapi Assistant ID
+    const VAPI_PUBLIC_API_KEY = 'YOUR_VAPI_PUBLIC_API_KEY_HERE'; // Replace with your Vapi Public API Key
+    ```
+3.  **Replace Placeholders**:
+    *   Replace `YOUR_VAPI_ASSISTANT_ID_HERE` with your actual Vapi Assistant ID. You can find this on your Vapi.ai dashboard under the settings for the specific assistant you want to use.
+    *   Replace `YOUR_VAPI_PUBLIC_API_KEY_HERE` with your actual Vapi Public API Key (sometimes referred to as Client Key or Publishable Key). This key is typically found under your Vapi account's API settings or developer section. It's different from your Vapi Secret API Key used for backend authentication.
+
+### Running the Web UI
+
+1.  **Ensure Backend is Running**: Make sure your Node.js backend server is running and accessible.
+2.  **Serve the UI**: For the Vapi SDK to work correctly (especially regarding microphone access), it's best to serve the HTML file from a local web server.
+    *   **Using Node.js (with `serve` package)**:
+        If you have `serve` installed globally:
+        ```bash
+        serve .
+        ```
+        Or using `npx`:
+        ```bash
+        npx serve .
+        ```
+        Then open your browser to the URL provided (usually `http://localhost:3000` or `http://localhost:5000`).
+    *   **Using Python**:
+        Navigate to the project root directory in your terminal and run:
+        ```bash
+        python3 -m http.server
+        ```
+        Then open your browser to `http://localhost:8000`.
+    *   **Direct File Opening (Potentially Limited)**:
+        You can try opening the `index.html` file directly in your browser (e.g., `file:///path/to/your/project/index.html`). However, this method can sometimes lead to limitations with JavaScript SDKs regarding microphone access or other browser security features. Using a local server is recommended.
+
+### Usage
+
+1.  Open the web interface in your browser using one of the methods above.
+2.  Click the **"Start Call"** button.
+3.  If prompted by your browser, grant microphone access.
+4.  The "Status" will update, and you can begin speaking to your Vapi assistant.
+5.  Your conversation (your speech and the assistant's responses) will appear in the transcript area.
+6.  Interim speech results will show what the assistant is hearing in real-time.
+7.  Click the **"End Call"** button (which appears once the call is active) to terminate the session.
+
 ```
