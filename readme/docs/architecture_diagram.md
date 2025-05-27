@@ -4,6 +4,8 @@ This page displays the System Overview (Logical Architecture) diagram for Conten
 
 The diagram illustrates the main components of the system and their primary interactions.
 
+***
+
 ```mermaid
 graph TD
     BU["Brand Users"]
@@ -28,15 +30,16 @@ graph TD
     CBS -- "Stripe API" --> PG
 ```
 
+
+
 **Key Components:**
 
-*   **Users:** Brand Users, Clipper Users.
-*   **Mobile Application:** The Next.js PWA serving as the frontend.
-*   **Backend Infrastructure:** Hosted on a cloud platform, including:
-    *   API Gateway / Load Balancer
-    *   Core Backend Service (handling main application logic)
-    *   Database (PostgreSQL)
-    *   Object Storage (for media files)
-*   **Payment Gateway:** External service (Stripe Connect) for payment processing.
+* **Users:** Brand Users, Clipper Users.
+* **Mobile Application:** The Next.js PWA serving as the frontend.
+* **Backend Infrastructure:** Hosted on a cloud platform, including:
+  * API Gateway / Load Balancer
+  * Core Backend Service (handling main application logic)
+  * Database (PostgreSQL)
+  * Object Storage (for media files)
+* **Payment Gateway:** External service (Stripe Connect) for payment processing.
 
-Refer to the main [Architecture Document](./architecture_document.md) for detailed descriptions of each component and their interactions.
