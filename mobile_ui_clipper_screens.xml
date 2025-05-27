@@ -1,0 +1,188 @@
+<ScreenGroup name="ClipperUser">
+
+  <Screen name="ClipperDashboardScreen_BrowseCampaigns">
+    <Title>Browse Campaigns</Title>
+    <Header>Find Your Next Project, [ClipperName]!</Header>
+    <ProfileButton id="userProfileButton" action="navigateTo('ClipperProfileScreen')" icon="user-profile.png" />
+
+    <FilterSortControls id="campaignsFilterSort">
+      <TextInput id="searchCampaignsInput" placeholder="Search by keyword, brand..." />
+      <Filter id="nicheFilter" label="Niche:">
+        <Option value="all" label="All Niches" default="true" />
+        <Option value="gaming" label="Gaming" />
+        <Option value="tech" label="Tech" />
+        <Option value="lifestyle" label="Lifestyle" />
+        <Option value="education" label="Education" />
+        <!-- Add more niches as defined -->
+      </Filter>
+      <Filter id="platformFilter" label="Platform:">
+        <Option value="all" label="All Platforms" default="true" />
+        <Option value="tiktok" label="TikTok" />
+        <Option value="instagramReels" label="Instagram Reels" />
+        <Option value="youtubeShorts" label="YouTube Shorts" />
+      </Filter>
+      <Sort id="payoutSort" label="Sort by:">
+        <Option value="newest" label="Newest First" default="true" />
+        <Option value="highest_potential_payout" label="Highest Potential Payout" />
+        <Option value="ending_soon" label="Ending Soon" />
+      </Sort>
+    </FilterSortControls>
+
+    <List id="availableCampaignsList" itemType="CampaignBrowseListItem">
+      <!-- CampaignBrowseListItem structure: -->
+      <!-- <ListItem id="campaign_[campaignId]"> -->
+      <!--   <Header class="campaignTitle">[CampaignTitle]</Header> -->
+      <!--   <Label class="brandName">Brand: [BrandName]</Label> -->
+      <!--   <Label class="campaignBriefSummary">[BriefSummary]</Label> -->
+      <!--   <Label class="payoutStructure">Payout: [Amount] per [X Views] on [Platform]</Label> -->
+      <!--   <TagList id="campaignTags" tags="[styleTag1, styleTag2]" /> -->
+      <!--   <Button action="navigateTo('ClipperCampaignDetailsScreen', {campaignId: [campaignId]})">View Details & Apply</Button> -->
+      <!-- </ListItem> -->
+    </List>
+    
+    <EmptyState id="noCampaignsEmptyState" condition="availableCampaignsList.isEmpty()">
+      <Label>No campaigns available right now that match your filters.</Label>
+      <Label type="footnote">Try broadening your search or check back soon!</Label>
+    </EmptyState>
+
+    <TabBar>
+      <Tab id="browseTab" label="Browse" icon="browse_icon.png" action="navigateTo('ClipperDashboardScreen_BrowseCampaigns')" active="true" />
+      <Tab id="myWorkTab" label="My Work" icon="mywork_icon.png" action="navigateTo('ClipperMyWorkScreen_Earnings')" />
+      <Tab id="messagesTab" label="Messages" icon="messages_icon.png" action="navigateTo('ClipperMessagesScreen')" />
+      <Tab id="profileTab" label="Profile" icon="profile_icon.png" action="navigateTo('ClipperProfileScreen')" />
+    </TabBar>
+  </Screen>
+
+  <Screen name="ClipperCampaignDetailsScreen">
+    <Title>Campaign Details</Title>
+    <BackButton action="goBack()" />
+    <ScrollView>
+      <Header id="campaignTitle">[CampaignTitle]</Header>
+      <Label id="brandName">Posted by: [BrandName]</Label>
+      <Image id="brandLogo" source="[brandLogoUrl]" alt="[BrandName] Logo" style="small_logo" />
+
+      <Section id="campaignBrief">
+        <Title>Project Brief</Title>
+        <Label id="briefText">[FullCampaignBrief]</Label>
+      </Section>
+
+      <Section id="campaignAssets">
+        <Title>Raw Footage/Assets Provided</Title>
+        <!-- List assets or links if applicable, or a general statement -->
+        <Label>Assets can be downloaded upon application acceptance.</Label>
+        <!-- <DownloadLink id="asset_[assetId]" url="[assetUrl]">Download [AssetName]</DownloadLink> -->
+      </Section>
+      
+      <Section id="desiredStyle">
+        <Title>Desired Style/Vibe</Title>
+        <TagList id="styleTags" tags="[styleTag1, styleTag2, styleTag3]" />
+      </Section>
+
+      <Section id="targetPlatforms">
+        <Title>Target Platforms</Title>
+        <Label id="platforms">[Platform1, Platform2]</Label>
+      </Section>
+
+      <Section id="payoutInformation">
+        <Title>Payout Structure</Title>
+        <Label id="payoutRate">Rate: [Amount] USD per [X Views] (e.g., 1000 views)</Label>
+        <Label id="maxBudget">Max Campaign Budget (if specified): [MaxBudget] USD</Label>
+        <Label id="paymentTerms" type="footnote">Payments are based on verified views and processed via ContentFlow.</Label>
+      </Section>
+      
+      <Button id="applyToCampaignButton" action="applyToCampaign([campaignId])" condition="!campaign.isApplied">Apply to this Campaign ("One-Click")</Button>
+      <Label id="alreadyAppliedLabel" condition="campaign.isApplied">You have applied to this campaign.</Label>
+      <Button id="submitContentButton" action="navigateTo('SubmitEditedContentScreen', {campaignId: [campaignId]})" condition="campaign.isAppliedAndApproved">Submit Content</Button>
+    </ScrollView>
+  </Screen>
+
+  <Screen name="ClipperMyWorkScreen_Earnings">
+    <Title>My Work & Earnings</Title>
+    <Header>Track Your Progress</Header>
+
+    <Section id="earningsSummary">
+      <Title>Earnings Overview</Title>
+      <StatBox id="pendingEarningsStat" label="Pending Payout" value="[totalPendingAmount] USD" />
+      <StatBox id="paidEarningsStat" label="Total Earned" value="[totalPaidAmount] USD" />
+      <StatBox id="activeSubmissionsStat" label="Active Submissions" value="[activeSubmissionsCount]" />
+    </Section>
+
+    <SegmentedControl id="workViewToggle">
+      <Segment id="submissionsSegment" label="My Submissions" targetView="submissionsView" default="true" />
+      <Segment id="payoutHistorySegment" label="Payout History" targetView="payoutHistoryView" />
+    </SegmentedControl>
+
+    <View id="submissionsView" condition="workViewToggle.selectedSegment == 'submissionsSegment'">
+      <Title>My Submissions</Title>
+      <List id="mySubmissionsList" itemType="MySubmissionListItem">
+        <!-- MySubmissionListItem structure: -->
+        <!-- <ListItem id="submission_[submissionId]"> -->
+        <!--   <Label class="campaignTitle">Campaign: [CampaignTitle]</Label> -->
+        <!--   <Label class="submissionDate">Submitted: [Date]</Label> -->
+        <!--   <Label class="status">Status: [SubmissionStatus] (e.g., Pending Review, Approved, Requires Revision, Paid)</Label> -->
+        <!--   <Label class="views">Views: [VerifiedViews]</Label> -->
+        <!--   <Label class="estimatedEarnings">Est. Earnings: [Amount] USD</Label> -->
+        <!--   <Button action="navigateTo('ClipperCampaignDetailsScreen', {campaignId: [campaignId]})">View Campaign</Button> -->
+        <!--   <Button action="editSubmission([submissionId])" condition="status=='requires_revision'">Edit Submission</Button> -->
+        <!-- </ListItem> -->
+      </List>
+      <EmptyState id="noSubmissionsEmptyState" condition="mySubmissionsList.isEmpty()">
+        <Label>You haven't submitted any content yet.</Label>
+        <Button action="navigateTo('ClipperDashboardScreen_BrowseCampaigns')">Find a Campaign to Work On</Button>
+      </EmptyState>
+    </View>
+
+    <View id="payoutHistoryView" condition="workViewToggle.selectedSegment == 'payoutHistorySegment'">
+      <Title>Payout History</Title>
+      <List id="payoutHistoryList" itemType="PayoutHistoryItem">
+        <!-- PayoutHistoryItem structure: -->
+        <!-- <ListItem id="payout_[payoutId]"> -->
+        <!--   <Label class="payoutDate">Date: [Date]</Label> -->
+        <!--   <Label class="payoutAmount">Amount: [Amount] USD</Label> -->
+        <!--   <Label class="relatedCampaigns">For Campaigns: [CampaignTitle1, CampaignTitle2]</Label> -->
+        <!--   <Label class="payoutStatus">Status: [Status] (e.g., Processed, Cleared)</Label> -->
+        <!-- </ListItem> -->
+      </List>
+      <EmptyState id="noPayoutsEmptyState" condition="payoutHistoryList.isEmpty()">
+        <Label>No payouts processed yet.</Label>
+      </EmptyState>
+    </View>
+    
+    <TabBar>
+      <Tab id="browseTab" label="Browse" icon="browse_icon.png" action="navigateTo('ClipperDashboardScreen_BrowseCampaigns')" />
+      <Tab id="myWorkTab" label="My Work" icon="mywork_icon.png" action="navigateTo('ClipperMyWorkScreen_Earnings')" active="true" />
+      <Tab id="messagesTab" label="Messages" icon="messages_icon.png" action="navigateTo('ClipperMessagesScreen')" />
+      <Tab id="profileTab" label="Profile" icon="profile_icon.png" action="navigateTo('ClipperProfileScreen')" />
+    </TabBar>
+  </Screen>
+
+  <Screen name="SubmitEditedContentScreen">
+    <Title>Submit Your Content</Title>
+    <Header>Campaign: [CampaignName]</Header>
+    <BackButton action="goBack()" />
+    <Form id="contentSubmissionForm">
+      <Section id="uploadVideo">
+        <Title>Upload Edited Video</Title>
+        <FileUpload id="editedVideoUpload" label="Select Your Video File" target="/api/upload/submission" acceptedFileTypes="video/*" validation="required" />
+        <ProgressBar id="uploadProgress" targetControl="editedVideoUpload" />
+        <Label type="footnote">Ensure your video meets platform guidelines.</Label>
+      </Section>
+
+      <Section id="platformLinks">
+        <Title>Links to Live Content</Title>
+        <Label>Provide direct links to where you've posted the content for this campaign.</Label>
+        <Repeater id="socialLinksRepeater" baseId="socialLinkItem" addButtonLabel="Add Another Platform Link">
+          <TextInput id="socialLinkItem_[index]_platform" label="Platform (e.g., TikTok, Instagram)" placeholder="TikTok" validation="required" />
+          <TextInput id="socialLinkItem_[index]_url" label="Direct URL to Post" placeholder="https://tiktok.com/yourvideo" validation="required|url" />
+        </Repeater>
+      </Section>
+
+      <TextArea id="submissionNotesInput" label="Optional Notes for the Brand" placeholder="Anything specific you want to highlight about your submission?" />
+      
+      <Checkbox id="confirmOriginalityCheckbox" label="I confirm this work is my original creation and meets campaign requirements." validation="required" />
+      
+      <Button id="submitContentButton" action="submitForm('contentSubmissionForm', '/api/campaigns/[campaignId]/submit')">Submit Content</Button>
+    </Form>
+  </Screen>
+
+</ScreenGroup>

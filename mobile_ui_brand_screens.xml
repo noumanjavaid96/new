@@ -1,0 +1,125 @@
+<ScreenGroup name="BrandUser">
+
+  <Screen name="BrandDashboardScreen">
+    <Title>Brand Dashboard</Title>
+    <Header>Welcome, [BrandName]</Header>
+    <ProfileButton id="userProfileButton" action="navigateTo('BrandProfileScreen')" icon="user-profile.png" />
+    
+    <Section id="quickStats">
+      <Title>Quick Stats</Title>
+      <StatBox id="activeCampaignsStat" label="Active Campaigns" value="[numberOfActiveCampaigns]" />
+      <StatBox id="totalViewsStat" label="Total Views Generated" value="[totalViews]" />
+      <StatBox id="totalSpendStat" label="Total Spend" value="[totalSpend]" />
+    </Section>
+
+    <Section id="activeCampaigns">
+      <Title>Active Campaigns</Title>
+      <Button id="createNewCampaignButton" action="navigateTo('CampaignCreationScreen')">Create New Campaign</Button>
+      <List id="activeCampaignsList" itemType="CampaignListItem">
+        <!-- CampaignListItem structure: -->
+        <!-- <ListItem id="campaign_[campaignId]"> -->
+        <!--   <Label class="campaignTitle">[CampaignTitle]</Label> -->
+        <!--   <Label class="campaignViews">Views: [Views]</Label> -->
+        <!--   <Label class="campaignSubmissions">Submissions: [SubmissionsCount]</Label> -->
+        <!--   <Button action="navigateTo('ViewSubmittedClipsScreen', {campaignId: [campaignId]})">View Clips</Button> -->
+        <!-- </ListItem> -->
+      </List>
+      <EmptyState id="noActiveCampaignsEmptyState" condition="activeCampaignsList.isEmpty()">
+        <Label>No active campaigns yet.</Label>
+        <Button action="navigateTo('CampaignCreationScreen')">Post Your First Campaign</Button>
+      </EmptyState>
+    </Section>
+
+    <Section id="pastCampaignsLink">
+      <Button id="navigateToPastCampaigns" action="navigateTo('PastCampaignsScreen')" style="secondary">View Past Campaigns</Button>
+    </Section>
+    
+    <TabBar>
+      <Tab id="dashboardTab" label="Dashboard" icon="dashboard_icon.png" action="navigateTo('BrandDashboardScreen')" active="true" />
+      <Tab id="messagesTab" label="Messages" icon="messages_icon.png" action="navigateTo('BrandMessagesScreen')" />
+      <Tab id="profileTab" label="Profile" icon="profile_icon.png" action="navigateTo('BrandProfileScreen')" />
+    </TabBar>
+  </Screen>
+
+  <Screen name="CampaignCreationScreen">
+    <Title>Create New Campaign</Title>
+    <Form id="campaignCreationForm">
+      <Header>Launch Your Campaign</Header>
+      <Label>"One-Click" Goal: Streamline this as much as possible.</Label>
+      
+      <TextInput id="campaignTitleInput" label="Campaign Title" placeholder="e.g., Spring Collection Promo" validation="required" />
+      
+      <Section id="rawFootageSection">
+        <Label>Raw Footage/Assets</Label>
+        <FileUpload id="footageUpload" label="Upload Files" target="/api/upload/footage" acceptedFileTypes="video/*,image/*" multiple="true" />
+        <Label>OR</Label>
+        <TextInput id="footageLinkInput" label="Provide Direct Links (e.g., Google Drive, Dropbox)" placeholder="https://..." />
+      </Section>
+      
+      <TextArea id="campaignBriefInput" label="Simple Brief / Key Message" placeholder="What's the main goal? What should clippers focus on?" validation="required" />
+      
+      <TagInput id="styleTagsInput" label="Desired Style/Keywords" placeholder="e.g., energetic, tutorial, funny" hint="Helps clippers understand the vibe." />
+      
+      <MultiSelect id="targetPlatformsInput" label="Target Platforms (MVP: May start with one)">
+        <Option id="tiktok" value="TikTok" label="TikTok" />
+        <Option id="instagramReels" value="Instagram Reels" label="Instagram Reels" />
+        <Option id="youtubeShorts" value="YouTube Shorts" label="YouTube Shorts" />
+        <!-- Add other platforms as needed -->
+      </MultiSelect>
+      
+      <Section id="budgetSection">
+        <Title>Budget Allocation (Performance-Based)</Title>
+        <TextInput id="amountPerViewInput" label="Amount per 1000 Views (USD)" placeholder="e.g., 5.00" keyboard="decimal-pad" validation="required|numeric" />
+        <TextInput id="maxBudgetInput" label="Maximum Campaign Budget (Optional, USD)" placeholder="e.g., 500.00" keyboard="decimal-pad" validation="numeric" />
+        <Label type="footnote">Clippers are paid based on verified views. You set the rate.</Label>
+      </Section>
+      
+      <Button id="launchCampaignButton" action="submitForm('campaignCreationForm', '/api/campaigns/create')">Launch Campaign</Button>
+      <Button id="saveDraftButton" action="saveFormAsDraft('campaignCreationForm')" style="secondary">Save as Draft</Button>
+    </Form>
+    <BackButton action="goBack()" />
+  </Screen>
+
+  <Screen name="ViewSubmittedClipsScreen">
+    <Title>Submitted Clips for [CampaignName]</Title>
+    <Header>Review Submissions</Header>
+    <BackButton action="navigateTo('BrandDashboardScreen')" />
+
+    <FilterSortControls id="clipsFilterSort">
+      <Filter id="statusFilter" label="Status:">
+        <Option value="all" label="All" default="true" />
+        <Option value="pending_review" label="Pending Review" />
+        <Option value="approved" label="Approved" />
+        <Option value="requires_revision" label="Requires Revision" />
+      </Filter>
+      <Sort id="dateSort" label="Sort by:">
+        <Option value="newest" label="Newest First" default="true" />
+        <Option value="oldest" label="Oldest First" />
+        <Option value="most_views" label="Most Views" />
+      </Sort>
+    </FilterSortControls>
+
+    <List id="submittedClipsList" itemType="SubmittedClipListItem">
+      <!-- SubmittedClipListItem structure: -->
+      <!-- <ListItem id="submission_[submissionId]" class="[submissionStatusClass]"> -->
+      <!--   <VideoPlayer id="clipPlayer_[submissionId]" source="[clipUrl]" thumbnail="[thumbnailUrl]" /> -->
+      <!--   <Label class="clipperName">Submitted by: [ClipperName]</Label> -->
+      <!--   <Label class="submissionDate">Date: [Date]</Label> -->
+      <!--   <Label class="viewCount">Views: [Views] ([ViewStatus])</Label> -->
+      <!--   <Label class="platformLinks">Posted to: <Link url="[platformLink1]">[Platform1]</Link>, <Link url="[platformLink2]">[Platform2]</Link></Label> -->
+      <!--   <ButtonGroup id="clipActions"> -->
+      <!--     <Button id="approveButton_[submissionId]" action="approveClip([submissionId])" condition="status=='pending_review'">Approve</Button> -->
+      <!--     <Button id="requestRevisionButton_[submissionId]" action="requestRevision([submissionId], 'Reason for revision...')" condition="status=='pending_review'">Request Revision</Button> -->
+      <!--     <Button id="viewDetailsButton_[submissionId]" action="navigateTo('ClipDetailsScreen', {submissionId: [submissionId]})">View Details</Button> -->
+      <!--   </ButtonGroup> -->
+      <!-- </ListItem> -->
+    </List>
+    
+    <EmptyState id="noSubmissionsEmptyState" condition="submittedClipsList.isEmpty()">
+      <Label>No clips have been submitted for this campaign yet.</Label>
+      <Label type="footnote">Clippers are working on it! Check back soon.</Label>
+    </EmptyState>
+    
+  </Screen>
+
+</ScreenGroup>

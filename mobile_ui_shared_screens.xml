@@ -1,0 +1,43 @@
+<ScreenGroup name="Authentication">
+
+  <Screen name="LaunchScreen">
+    <Title>Welcome to ContentFlow</Title>
+    <Image type="logo" source="logo.png" alt="ContentFlow Logo" />
+    <Label>The future of content creation and collaboration.</Label>
+    <Button id="navigateToSignupButton" action="navigateTo('SignupScreen')">Get Started</Button>
+    <Button id="navigateToLoginButton" action="navigateTo('LoginScreen')" style="secondary">Login</Button>
+    <Label type="footnote">By continuing, you agree to our Terms of Service and Privacy Policy.</Label>
+  </Screen>
+
+  <Screen name="SignupScreen">
+    <Title>Create Your Account</Title>
+    <Form id="signupForm">
+      <Header>Join ContentFlow</Header>
+      <TextInput id="emailInput" label="Email Address" placeholder="you@example.com" keyboard="email-address" validation="required|email" />
+      <TextInput id="passwordInput" label="Password" placeholder="Min. 8 characters" secure="true" validation="required|minlength:8" />
+      <TextInput id="confirmPasswordInput" label="Confirm Password" placeholder="Re-enter your password" secure="true" validation="required|matches:passwordInput" />
+      <RadioGroup id="roleSelection" label="I am a:">
+        <RadioButton id="brandRadio" value="brand" label="Brand (Looking for Clippers)" />
+        <RadioButton id="clipperRadio" value="clipper" label="Clipper (Looking for Projects)" />
+      </RadioGroup>
+      <Checkbox id="termsCheckbox" label="I agree to the Terms of Service and Privacy Policy." validation="required" />
+      <Button id="signupButton" action="submitForm('signupForm', '/api/auth/register')">Sign Up</Button>
+      <Label>Already have an account?</Label>
+      <Button id="navigateToLoginLink" action="navigateTo('LoginScreen')" style="link">Login</Button>
+    </Form>
+  </Screen>
+
+  <Screen name="LoginScreen">
+    <Title>Login to ContentFlow</Title>
+    <Form id="loginForm">
+      <Header>Welcome Back!</Header>
+      <TextInput id="emailInput" label="Email Address" placeholder="you@example.com" keyboard="email-address" validation="required|email" />
+      <TextInput id="passwordInput" label="Password" placeholder="Enter your password" secure="true" validation="required" />
+      <Button id="forgotPasswordLink" action="navigateTo('ForgotPasswordScreen')" style="link">Forgot Password?</Button>
+      <Button id="loginButton" action="submitForm('loginForm', '/api/auth/login')">Login</Button>
+      <Label>Don't have an account?</Label>
+      <Button id="navigateToSignupLink" action="navigateTo('SignupScreen')" style="link">Sign Up</Button>
+    </Form>
+  </Screen>
+
+</ScreenGroup>
