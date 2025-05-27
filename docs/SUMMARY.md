@@ -44,7 +44,7 @@
         *   [General UI Elements](./ui_screen_descriptions.md#iv-general-ui-elements-used-across-multiple-screens)
 
 *   **UI Blueprints (XML-like)**
-    *   [Structured UI Layouts](./ui_blueprints_combined.xml) <!-- Assuming the user will combine the XML files or this points to a directory -->
+    *   [Structured UI Layouts](./ui_blueprints.md) <!-- Explains the XML-like blueprints provided earlier -->
 
 *   **Diagrams**
     *   [System Architecture Diagram (Mermaid)](./architecture_diagram.md) <!-- This would be a new .md file where the user pastes the Mermaid code block -->
